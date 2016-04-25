@@ -1,0 +1,20 @@
+<!--
+* This phtml file is used to send php data to colorswatch.js 
+-->
+<script>
+        function getAllData(){
+		return '<?php echo $this->getJsonConfig() ?>';	
+	}    
+        function getBaseDir(){
+            return '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>';
+        }
+        function getBaseUrl(){
+            return '<?php echo $this->getBaseUrl(); ?>';
+        }
+        function getDesignData(){
+            var data='<?php echo json_encode(Mage::getModel('colorswatch/design')->getCollection()->getData()) ?>';
+           
+            return data;
+            	
+        }
+</script>

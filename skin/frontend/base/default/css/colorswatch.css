@@ -1,0 +1,35 @@
+/*
+ * Excellence Colorswatch
+ * Developed By : Excellence technologies pvt. Lmt.
+ * 
+ * This css Work on category single product page
+ * 
+ */
+/* ============================================ *
+ * Image Boxes Styles
+ * ============================================ */
+.colors{
+    height: 50px;  float: left; left: 5px; margin-right: 5px; border: solid 1px black;padding:0px 5px 0px 5px;line-height: 50px;
+    text-align: center;overflow: hidden;outline: none;
+}
+/* ============================================ *
+ * Invalid options Boxes Styles
+ * ============================================ */
+
+.invalidOptions{
+    opacity: 0.5;background-color:white; height: 50px; float: left; left: 5px; margin-right: 5px; border: solid 1px #B3B3BB; line-height: 50px;
+    text-align: center;overflow: hidden;
+}
+.invalidOptions span{
+    color:#B3B3BB;
+}
+
+/* ============================================ *
+ * Boxes hover effect
+ * ============================================ */
+
+.colors:hover{
+    outline: 2px solid #FDBA3E;
+    cursor:pointer;
+}
+

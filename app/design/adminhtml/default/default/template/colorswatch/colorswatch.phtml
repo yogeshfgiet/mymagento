@@ -1,0 +1,330 @@
+
+<div>
+    <ul class="messages">
+        <li class="notice-msg">
+            <ul>
+                <li><?php echo $this->__('If you do not specify an option value for a specific store view then the default (Admin) value will be used.') ?></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="entity-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Manage Titles (Size, Color, etc.)') ?></h4>
+    </div>
+    <div class="box">
+        <div class="hor-scroll">
+
+            <table class="dynamic-grid" cellspacing="0" id="attribute-labels-table">
+                <tr>
+                    <?php foreach ($this->getStores() as $_store): ?>
+                        <th><?php echo $_store->getName() ?></th>
+                    <?php endforeach; ?>
+                </tr>
+                <tr>
+                   
+                    <?php //die(); ?>
+                    <?php foreach ($this->getStores() as $_store): ?>
+                        <td>
+                            
+                            <input class="input-text<?php if ($_store->getId() == 0): ?> required-option<?php endif; ?>" type="text" name="frontend_label[<?php echo $_store->getId() ?>]" value="<?php echo $this->htmlEscape[$_store->getId()] ?>"<?php if ($this->getReadOnly()): ?> disabled="disabled"<?php endif; ?>/>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="entity-edit" id="matage-options-panel">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Manage Options (values of your attribute)') ?></h4>
+    </div>
+    <div class="box">
+        <div class="hor-scroll">
+            <table class="dynamic-grid" cellspacing="0"  cellpadding="0">
+                <tr id="attribute-options-table">
+                    <?php foreach ($this->getStores() as $_store): ?>
+                        <th><?php echo $_store->getName() ?></th>
+                    <?php endforeach; ?>
+                    <th><?php echo $this->__('Position') ?></th>
+                    <th class="nobr a-center"><?php echo $this->__('Is Default') ?></th>
+
+                    <th>
+                        <?php if (!$this->getReadOnly()): ?>
+                            <?php echo $this->getAddNewButtonHtml() ?>
+                        <?php endif; ?>
+                    </th>
+                    <th><?php echo $this->__('Upload Image') ?></th>
+                </tr>
+                <tr class="no-display template" id="row-template">
+                    <?php foreach ($this->getStores() as $_store): ?>
+                        <td><input name="option[value][{{id}}][<?php echo $_store->getId() ?>]" value="{{store<?php echo $_store->getId() ?>}}" class="input-text<?php if ($_store->getId() == 0): ?> required-option<?php endif; ?>" type="text" <?php if ($this->getReadOnly()): ?> disabled="disabled"<?php endif; ?>/></td>
+                    <?php endforeach; ?>
+                    <td class="a-center"><input class="input-text" type="text" name="option[order][{{id}}]" value="{{sort_order}}" <?php if ($this->getReadOnly()): ?> disabled="disabled"<?php endif; ?>/></td>
+                    <td><input class="input-radio" type="radio" name="default[]" value="{{id}}" <?php if ($this->getReadOnly()): ?> disabled="disabled"<?php endif; ?>/></td>
+                    <td class="a-left">
+
+                        <?php if (!$this->getReadOnly()): ?>
+                            <?php echo $this->getDeleteButtonHtml() ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="hidden" id="option-count-check" value="" />
+    </div>
+</div>
+</br>
+<?php 
+ 
+    $attributeId=Mage::registry('entity_attribute')->getAttributeId();
+   
+    $model = Mage::getModel('colorswatch/design')->getCollection()->addFieldToFilter('attribute_id', $attributeId)->getFirstItem();
+
+    $data=$model->getData();   
+    
+?>
+<div class="entity-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Attribute Design Settings') ?></h4>
+    </div>
+    <div class="box">
+        <div class="hor-scroll">
+
+            <table>
+                <tr>
+
+                    <td class="label"><?php echo $this->__('Box Active Border') ?></td>                        
+                    <td><input value="<?php if(!empty($data) ){ echo $data['box_active_border'] ; } ?>" name="boxActiveBorder" class="input-text" type="text"></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->__('Box Active Background') ?></td>                        
+                    <td><input value="<?php if(!empty($data) ){echo $data['box_active_background'] ;} ?>"  name="boxActiveBackground" class="input-text" type="text"></td>
+                </tr>
+                <tr>
+
+                    <td class="label"><?php echo $this->__('Box Inactive Border') ?></td>                        
+                    <td><input value="<?php if(!empty($data) ){echo $data['box_inactive_border'];} ?>"  name="boxInactiveBorder" class="input-text" type="text"></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->__('Box Inactive Background') ?></td>                        
+                    <td><input value="<?php if(!empty($data) ){echo $data['box_inactive_background']; }?>"  name="boxInactiveBackground" class="input-text" type="text"></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->__('Height') ?></td>                        
+                    <td><input  value="<?php if(!empty($data) ){echo $data['height'];} ?>"  name="boxHeight" class="input-text" type="text"></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->__('Box Style') ?></td>                        
+                    <td><input name="boxStyle" id="circle"  type="radio" value="circle" <?php  if(!empty($data) && $data['box_style']=='circle'): ?> checked="checked" <?php endif; ?>><label for="circle">circle</label><br><input name="boxStyle" id="rectangle"  type="radio" value="rectangle" <?php     if(!empty($data) && $data['box_style']=='rectangle'): ?> checked="checked" <?php  endif; ?>><label for="rectangle">rectangle</label></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+<?php
+$customId = 0;
+$collection = Mage::getResourceModel('eav/entity_attribute_option_collection');
+foreach ($collection->getData() as $value) {
+    if ((int) $value['option_id'] > $customId) {
+        $customId = $value['option_id'];
+    }
+}
+?>
+    var customId = parseInt('<?php echo $customId; ?>');
+    var altUrl = "'none'";
+    var optionDefaultInputType = 'radio';
+    var templateText =
+            '<tr class="option-row">' +
+<?php foreach ($this->getStores() as $_store): ?>
+        '<td><input name="option[value][{{id}}][<?php echo $_store->getId() ?>]" value="{{store<?php echo $_store->getId() ?>}}" class="input-text<?php if ($_store->getId() == 0): ?> required-option<?php endif; ?>" type="text" <?php if ($this->getReadOnly()): ?> disabled="disabled"<?php endif; ?>/><\/td>' +
+<?php endforeach; ?>
+    '<td><input class="input-text" type="text" name="option[order][{{id}}]" value="{{sort_order}}" <?php if ($this->getReadOnly()): ?> disabled="disabled"<?php endif; ?>/><\/td>' +
+            '<td class="a-center"><input class="input-radio" type="{{intype}}" name="default[]" value="{{id}}" {{checked}} <?php if ($this->getReadOnly()): ?> disabled="disabled"<?php endif; ?>/><\/td>' +
+            '<td class="a-left" id="delete_button_container_{{id}}">' +
+            '<input type="hidden" class="delete-flag" name="option[delete][{{id}}]" value="" />' +
+<?php if (!$this->getReadOnly()): ?>
+        '<?php echo Mage::helper('core')->jsQuoteEscape($this->getDeleteButtonHtml()) ?>' +
+<?php endif; ?>
+    '<\/td>' +
+            '<td style="width:130px;"><div style="height:30px;"><div class="attributeImagesContainer">\n\
+            <img class="attributeImages" style="transition: all 0.4s ease 0s; border:solid 1px #777;display:none;float:left;height:30px;width:30px;" onerror="this.style.display=' + altUrl + '" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>colorswatch/<?php echo Mage::registry('entity_attribute')->getAttributeId(); ?>/{{id}}/img"/>\n\
+            <span title="Delete Image" id="{{id}}" class="deleteImage" style="font-size:20px; position:relative;margin-right:-12px; float:left; top:6px;left:-21px; cursor:pointer; color:red;display:none;">×</span>\n\
+            <span style="float:left" class="msg"></span></div>\n\
+            <input style="color: transparent;float:right; margin-right:0px;" name="{{id}}" type="file" /></div>\n\
+            <\/td>' +
+            '<td class="filename"></td>'
+    '<\/tr>';
+
+    var attributeOption = {
+        table: $('attribute-options-table'),
+        templateSyntax: /(^|.|\r|\n)({{(\w+)}})/,
+        templateText: templateText,
+        itemCount: 0,
+        totalItems: 0,
+        isReadOnly: <?php echo (int) $this->getReadOnly(); ?>,
+        add: function(data) {
+            this.template = new Template(this.templateText, this.templateSyntax);
+            var isNewOption = false;
+            var check = 0;
+            var dataId = parseInt(data.id);
+            if (dataId > customId && Number.isInteger(dataId)) {
+                customId = data.id;
+            }
+            if (!data.id) {
+                data = {};
+                data.id = 'option_' + this.itemCount;
+                isNewOption = true;
+                check = 1;
+            }
+            if (!data.intype)
+                data.intype = optionDefaultInputType;
+            Element.insert(this.table, {after: this.template.evaluate(data)});
+            if (isNewOption && !this.isReadOnly) {
+                this.enableNewOptionDeleteButton(data.id);
+            }
+            this.bindRemoveButtons();
+            this.itemCount++;
+            this.totalItems++;
+            this.updateItemsCountField();
+            if (check == 1) {
+                setImageName();
+                check = 0;
+            }
+        },
+        remove: function(event) {
+            alert('a');
+            var element = $(Event.findElement(event, 'tr')); // !!! Button already
+            // have table parent in safari
+            // Safari workaround
+            console.log(jQuery('input:file').index(jQuery(element).find('input:file')));
+            element.ancestors().each(function(parentItem) {
+                if (parentItem.hasClassName('option-row')) {
+                    element = parentItem;
+                    throw $break;
+                } else if (parentItem.hasClassName('box')) {
+                    throw $break;
+                }
+            });
+
+
+            if (element) {
+                var elementFlags = element.getElementsByClassName('delete-flag');
+                if (elementFlags[0]) {
+                    elementFlags[0].value = 1;
+                }
+
+                element.addClassName('no-display');
+                element.addClassName('template');
+                element.hide();
+                this.totalItems--;
+                this.updateItemsCountField();
+            }
+        },
+        updateItemsCountField: function() {
+            if (this.totalItems > 0) {
+                $('option-count-check').value = '1';
+            } else {
+                $('option-count-check').value = '';
+            }
+        },
+        enableNewOptionDeleteButton: function(id) {
+            $$('#delete_button_container_' + id + ' button').each(function(button) {
+                button.enable();
+                button.removeClassName('disabled');
+            });
+        },
+        bindRemoveButtons: function() {
+            var buttons = $$('.delete-option');
+            for (var i = 0; i < buttons.length; i++) {
+                if (!$(buttons[i]).binded) {
+                    $(buttons[i]).binded = true;
+                    Event.observe(buttons[i], 'click', this.remove.bind(this));
+                }
+            }
+        }
+
+    }
+    if ($('row-template')) {
+        $('row-template').remove();
+    }
+    attributeOption.bindRemoveButtons();
+
+    if ($('add_new_option_button')) {
+        Event.observe('add_new_option_button', 'click', attributeOption.add.bind(attributeOption));
+    }
+    Validation.addAllThese([
+        ['required-option', '<?php echo $this->jsQuoteEscape($this->__('Failed')) ?>', function(v) {
+                return !Validation.get('IsEmpty').test(v);
+            }]]);
+    Validation.addAllThese([
+        ['required-options-count', '<?php echo $this->jsQuoteEscape($this->__('Options is required')) ?>', function(v) {
+                return !Validation.get('IsEmpty').test(v);
+            }]]);
+<?php foreach ($this->getOptionValues() as $_value): ?>
+        attributeOption.add(<?php echo $_value->toJson() ?>);
+<?php endforeach; ?>
+//]]>
+    jQuery().ready(function() {
+
+        jQuery('.deleteImage').click(function() {
+            var thisObj = jQuery(this);
+            thisObj.hide();
+            thisObj.parents('tr').children('.filename').hide();
+            var ajaxImageUrl = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>' + 'colorswatch/ajax-loader.gif';
+            thisObj.parent().children('img').removeClass();
+            thisObj.parent().children('img').prop('src', ajaxImageUrl);
+            var attrId = '<?php echo Mage::registry('entity_attribute')->getAttributeId(); ?>';
+            var optionId = jQuery(this).prop('id');
+            jQuery.ajax({
+                async: true,
+                url: '<?php echo Mage::getUrl('colorswatch/index/deleteimage'); ?>',
+                type: 'POST',
+                data: {aId: attrId, oId: optionId},
+                success: function(data) {
+                    if (JSON.parse(data).yes) {
+                        //thisObj.parent().children('img').hide();
+                        thisObj.hide();
+                        thisObj.parents('tr').children('.filename').css('color', 'green');
+                        thisObj.parents('tr').children('.filename').text('Image Deleted Successfully!');
+                        thisObj.parents('tr').children('.filename').fadeIn();
+                        thisObj.parents('tr').children('.filename').fadeOut(10000);
+                    }
+                    else {
+                        thisObj.parents('tr').children('.filename').text("Sorry file can't be deleted");
+                    }
+                }
+            });
+
+        });
+        jQuery('body').on('change', 'input:file', function() {
+            console.log(jQuery(this).parents('tr'));
+            jQuery(this).parents('tr').children('.filename').hide();
+            jQuery(this).parents('tr').children('.filename').css('color', 'black');
+            jQuery(this).parents('tr').children('.filename').text(jQuery(this).val());
+            jQuery(this).parents('tr').children('.filename').fadeIn();
+        });
+        jQuery('.attributeImagesContainer').hover(function() {
+            jQuery(this).children('.attributeImages').css('opacity', '0.4');
+            jQuery(this).children('span').show();
+        });
+        jQuery('.attributeImagesContainer').mouseleave(function() {
+            jQuery(this).children('.attributeImages').css('opacity', '1');
+            jQuery(this).children('span').hide();
+        });
+    });
+    jQuery('.attributeImages').load(function() {
+        jQuery(this).fadeIn();
+    }).error(function() {
+        jQuery(this).hide();
+        jQuery(this).parent().children('span').hide();
+    });
+    function setImageName() {
+        //console.log(jQuery('input:file'));
+        customId++;
+        jQuery('input:file').eq(0).prop('name', customId);
+    }
+</script>

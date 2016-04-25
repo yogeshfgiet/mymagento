@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <colorswatch_adminhtml_colorswatch_index>
+        <reference name="content">
+            <block type="colorswatch/adminhtml_colorswatch" name="colorswatch" />
+        </reference>
+    </colorswatch_adminhtml_colorswatch_index>
+    <adminhtml_catalog_product_attribute_edit>
+    <reference name="head">
+        <action method="addItem" >
+                <type>js</type>
+                <name>colorswatch/jquery-2.1.4.js</name>
+            </action>
+	    
+    </reference>
+    </adminhtml_catalog_product_attribute_edit>
+</layout>

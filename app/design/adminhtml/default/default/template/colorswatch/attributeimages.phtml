@@ -1,0 +1,29 @@
+<?php
+$product = Mage::getModel('catalog/product')->load(Mage::registry('current_product')->getId());
+if($product->isConfigurable()):
+$allAttributes = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
+$imageUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'colorswatch'.DS;
+//print_r($allAttributes);
+foreach ($allAttributes as $attribute):?>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__($attribute['label']) ?></h4></div>
+    <div class="fieldset fieldset-wide">
+        <table cellspacing="10">
+            <thead><th><?php echo $this->__('Label') ?></th><th><?php echo $this->__('Upload Image') ?></th></thead>
+        <tbody>            
+        <?php foreach($attribute['values'] as $options): ?>
+        <tr>
+        <td><?php echo $this->__($options['label']) ?></td>
+        <td>
+            <img style="border:solid 1px black; height: 30px; width: 30px;" onerror="this.style.display='none'" src="<?php echo $imageUrl.$attribute['attribute_id'].DS.$options['value_index'].DS.'img' ?>">
+            <input style="color: transparent;float:right; margin-right:0px;" name="<?php echo $options['value_index'] ?>" type="file" />
+        </td>
+        </tr>    
+        <?php endforeach; ?>       
+        </tbody>
+        </table>
+    </div>
+</div>
+<?php endforeach; 
+ endif;
+?>

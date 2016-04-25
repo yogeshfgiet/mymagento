@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+* @category   Excellence
+* @package    Excellence_Colorswatch
+* @author     ModuleCreator
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+    <modules>
+        <Excellence_Colorswatch>
+            <version>0.1.3</version>
+        </Excellence_Colorswatch>
+    </modules>
+    <frontend>
+        <routers>
+            <colorswatch>
+                <use>standard</use>
+                <args>
+                    <module>Excellence_Colorswatch</module>
+                    <frontName>colorswatch</frontName>
+                </args>
+            </colorswatch>
+        </routers>
+        <layout>
+            <updates>
+                <colorswatch>
+                    <file>colorswatch.xml</file>
+                </colorswatch>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <colorswatch>
+                <use>admin</use>
+                <args>
+                    <module>Excellence_Colorswatch</module>
+                    <frontName>colorswatch</frontName>
+                </args>
+            </colorswatch>
+        </routers>
+    </admin>
+    <adminhtml>
+        
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <Excellence_Colorswatch>
+                            <title>Colorswatch Module</title>
+                            <sort_order>10</sort_order>
+                        </Excellence_Colorswatch>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <colorswatch>
+                    <file>colorswatch.xml</file>
+                </colorswatch>
+            </updates>
+        </layout>
+    </adminhtml>   
+    <adminhtml>
+        <layout>
+            <updates>
+                <excellence_colorwatch>
+                    <file>colorswatch.xml</file>
+                </excellence_colorwatch>                
+            </updates>
+        </layout>
+    </adminhtml>
+    <global>
+        <models>
+            <colorswatch>
+                <class>Excellence_Colorswatch_Model</class>
+                <resourceModel>colorswatch_mysql4</resourceModel>
+            </colorswatch>
+            <colorswatch_mysql4>
+                <class>Excellence_Colorswatch_Model_Mysql4</class>
+                <entities>
+                    <colorswatch>
+                        <table>colorswatch</table>
+                    </colorswatch>
+                    <design>
+                        <table>attribute_design_settings</table>
+                    </design>
+                </entities>
+            </colorswatch_mysql4>
+        </models>
+        <resources>
+            <colorswatch_setup>
+                <setup>
+                    <module>Excellence_Colorswatch</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </colorswatch_setup>
+            <colorswatch_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </colorswatch_write>
+            <colorswatch_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </colorswatch_read>
+        </resources>
+        <blocks>
+            <colorswatch>
+                <class>Excellence_Colorswatch_Block</class>
+            </colorswatch>
+	  
+        </blocks>
+        <helpers>
+            <colorswatch>
+                <class>Excellence_Colorswatch_Helper</class>
+            </colorswatch>
+        </helpers>
+        <adminhtml>
+            <layout>
+                <updates>
+                    <adminhtml>
+                        <file>colorswatch.xml</file>
+                    </adminhtml>  
+                </updates>
+            </layout>
+        </adminhtml>
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <catalog_product_attribute_edit_tab_options>Excellence_Colorswatch_Block_Adminhtml_Imageupload</catalog_product_attribute_edit_tab_options>
+                </rewrite>
+                <rewrite>
+                    <catalog_product_attribute_edit_form>Excellence_Colorswatch_Block_Adminhtml_Form</catalog_product_attribute_edit_form>
+                </rewrite>
+                <rewrite>
+                    <catalog_product_edit_tabs>Excellence_Colorswatch_Block_Adminhtml_Tabs</catalog_product_edit_tabs>
+                </rewrite>
+            </adminhtml>
+            
+        </blocks>
+        <events>
+            <catalog_entity_attribute_save_after>
+                <observers>
+                    <excellence_colorswatch>
+                        <class>Excellence_Colorswatch_Model_Observer</class>
+                        <method>saveImages</method>
+                    </excellence_colorswatch>
+                </observers>
+            </catalog_entity_attribute_save_after>
+         
+            
+
+        </events>
+        <helpers>
+            <catalog>
+                <rewrite>
+                    <product_configuration>Excellence_Colorswatch_Helper_Data</product_configuration>
+                </rewrite> 
+            </catalog>
+        </helpers>
+        <messages>
+            <error>
+                <invalid_file>Invalid Image Format: Only jpg, png and gif Supported!</invalid_file>
+                <permissions>Error: Check permission for media/ folder</permissions>
+                <file>Unable to save image</file>
+            </error>
+        </messages>
+    </global>
+</config>
